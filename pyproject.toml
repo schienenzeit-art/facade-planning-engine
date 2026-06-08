@@ -1,0 +1,91 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "facade-planning-engine"
+version = "0.1.0"
+description = "Automated technical facade planning from PDF plans and supplier formats"
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "Proprietary" }
+authors = [{ name = "schienenzeit-art" }]
+keywords = ["facade", "planning", "architecture", "DXF", "panelization"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
+
+dependencies = [
+    "typer>=0.12",
+    "pydantic>=2.7",
+    "shapely>=2.0",
+    "ezdxf>=1.3",
+    "pdfminer.six>=20231228",
+    "rich>=13.7",
+]
+
+[project.optional-dependencies]
+dev = [
+    "facade-planning-engine[test,lint]",
+    "pre-commit>=3.7",
+    "bump2version>=1.0",
+]
+test = [
+    "pytest>=8.2",
+    "pytest-cov>=5.0",
+    "pytest-benchmark>=4.0",
+]
+lint = [
+    "ruff>=0.4",
+    "mypy>=1.10",
+    "import-linter>=2.1",
+    "types-shapely",
+]
+
+[project.scripts]
+facade = "facade_planner.cli.main:app"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/facade_planner"]
+
+# ── Ruff ──────────────────────────────────────────────────────────────────────
+[tool.ruff]
+src = ["src"]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM", "TCH"]
+ignore = ["E501"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["facade_planner"]
+
+# ── Mypy ──────────────────────────────────────────────────────────────────────
+[tool.mypy]
+python_version = "3.11"
+strict = true
+warn_return_any = true
+warn_unused_configs = true
+mypy_path = "src"
+packages = ["facade_planner"]
+
+# ── Pytest ────────────────────────────────────────────────────────────────────
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "--cov=facade_planner --cov-report=term-missing --cov-fail-under=80"
+pythonpath = ["src"]
+
+[tool.coverage.run]
+source = ["facade_planner"]
+omit = ["*/tests/*", "*/__init__.py"]
+
+[tool.coverage.report]
+exclude_lines = ["pragma: no cover", "if TYPE_CHECKING:"]
+
+# ── Import Linter ─────────────────────────────────────────────────────────────
+[tool.importlinter]
+root_packages = ["facade_planner"]
+include_external_packages = true

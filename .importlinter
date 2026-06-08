@@ -1,0 +1,29 @@
+[importlinter]
+root_packages = facade_planner
+
+[importlinter:contract:domain-independence]
+name = Domain layer must not import from application or infrastructure
+type = forbidden
+source_modules =
+    facade_planner.domain
+forbidden_modules =
+    facade_planner.application
+    facade_planner.infrastructure
+    facade_planner.cli
+
+[importlinter:contract:application-independence]
+name = Application layer must not import from infrastructure or cli
+type = forbidden
+source_modules =
+    facade_planner.application
+forbidden_modules =
+    facade_planner.infrastructure
+    facade_planner.cli
+
+[importlinter:contract:cli-independence]
+name = CLI must not import directly from infrastructure (only via application)
+type = forbidden
+source_modules =
+    facade_planner.cli
+forbidden_modules =
+    facade_planner.infrastructure

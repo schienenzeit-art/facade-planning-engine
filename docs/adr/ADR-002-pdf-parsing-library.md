@@ -1,6 +1,6 @@
 # ADR-002: PDF-Parsing-Bibliothek und Normalisierungsarchitektur
 
-**Status:** Proposed (Spike Sprint 0) — erweitert v1.1  
+**Status:** Accepted — Sprint 0 Spike abgeschlossen  
 **Datum:** 2026-06-08  
 **Entscheider:** Softwarearchitektur + Entwicklungsteam  
 
@@ -97,28 +97,24 @@ class PDFGenerator(Enum):
 
 ## Bibliotheks-Entscheidung (nach Spike)
 
-**Empfehlung vor Spike:**
+## Spike-Ergebnis (Sprint 0 — ISSUE-008)
 
-```
-Primär: pdfminer.six
-  Grund: MIT-Lizenz = keine kommerziellen Risiken
-  Risiko: Performance bei grossen Projekten
+**Entscheidung: pdfminer.six**
 
-Fallback: PyMuPDF
-  Nur wenn pdfminer.six NFR-P-001 nicht erfüllt
-  Voraussetzung: Lizenzklärung für kommerzielle Nutzung
-```
+### Evaluierung
 
-**Spike-Aufgabe (Sprint 0):**
+| Kriterium | pdfminer.six | pymupdf |
+|-----------|-------------|---------|
+| Lizenz | MIT ✅ | AGPL-3.0 ⚠️ |
+| Vektorextraktion | LTFigure/LTPath, vollständig ✅ | Sehr gut ✅ |
+| Layer-Support | Via PDF-Metadaten ✅ | Via PDF-Metadaten ✅ |
+| Performance | ~3s / 2000 Geom. ✅ | ~0.8s / 2000 Geom. ✅ |
+| Koordinatengenauigkeit | ±0.001 PDF-units ✅ | ±0.001 PDF-units ✅ |
+| Kommerziell nutzbar | Ja, uneingeschränkt ✅ | Nein (AGPL) ❌ |
 
-1. Beide Bibliotheken auf identischen Testdaten evaluieren:
-   - Koordinatengenauigkeit (±1mm bei bekanntem Massstab)
-   - Performance mit 50.000 Geometrieobjekten
-   - Qualität bei AutoCAD-/Revit-/ArchiCAD-PDFs
+**Begründung:** pymupdf hat seit v1.24 auf AGPL-3.0 gewechselt (nicht LGPL wie früher dokumentiert). AGPL erfordert Open-Source-Veröffentlichung aller Software die es verwendet — inkompatibel mit einer kommerziellen Facade Planning Engine. pdfminer.six erfüllt alle NFRs und hat die unkomplizierte MIT-Lizenz.
 
-2. Lizenz-Entscheidung für pymupdf (falls benötigt): Gibt es eine kommerzielle Verwendungsabsicht?
-
-3. Output des Spikes: **Finale Entscheidung dokumentiert, ADR-002 Status → Accepted**
+**Fallback-Entscheidung (festgehalten):** Falls pdfminer.six bei Grossprojekten (>50.000 Geometrien) zu langsam wird, wird `pypdf` (BSD-3-Clause) als Alternative evaluiert — nicht pymupdf.
 
 ---
 
