@@ -80,13 +80,83 @@ def scale(
 
 @app.command("import")
 def import_plan(
-    path: Path = typer.Argument(..., help="Pfad zur PDF-Datei"),
+    pdf_path: Path = typer.Argument(..., help="Pfad zur PDF-Datei"),
+    name: str = typer.Option("", "--name", "-n", help="Plan-Name (Standard: Dateiname)"),
 ) -> None:
-    """Import a PDF plan file (not yet implemented)."""
-    _not_implemented("import")
+    """Import a PDF plan and extract vector geometry."""
+    import warnings
+    from facade_planner.infrastructure.adapters.pdf_import_adapter import PDFImportAdapter
+    from facade_planner.infrastructure.persistence.facade_plan_repository import FileFacadePlanRepository
+
+    try:
+        project = ProjectService(Path.cwd()).require_initialized()
+
+        if not pdf_path.exists():
+            console.print(f"[red]Fehler:[/red] Datei nicht gefunden: {pdf_path}")
+            raise typer.Exit(1)
+
+        plan_name = name or pdf_path.stem
+
+        with warnings.catch_warnings(record=True) as caught:
+            warnings.simplefilter("always")
+            adapter = PDFImportAdapter()
+            plan = adapter.import_plan(pdf_path, plan_name)
+
+        for w in caught:
+            console.print(f"[yellow]Warnung:[/yellow] {w.message}")
+
+        plans_dir = Path.cwd() / ".facadeplanner" / "plans"
+        repo = FileFacadePlanRepository(plans_dir)
+        repo.save(plan)
+
+        table = Table(title=f"Plan importiert: {plan.name}")
+        table.add_column("Eigenschaft", style="cyan")
+        table.add_column("Wert")
+        table.add_row("ID", plan.id)
+        table.add_row("Generator", plan.pdf_source.value)
+        table.add_row("Seiten", str(plan.page_count))
+        table.add_row("Geometrien (gesamt)", str(plan.total_geometry_count))
+        table.add_row("Quelle", plan.source_path)
+        console.print(table)
+        console.print("[dim]Kalibrierung: 'facade plan scale --ratio 100' (oder --pdf-dist/--real-dist)[/dim]")
+    except FacadePlannerError as e:
+        console.print(f"[red]Fehler:[/red] {e}")
+        raise typer.Exit(1) from e
 
 
 @app.command("list")
 def list_plans() -> None:
-    """List all imported plans (not yet implemented)."""
-    _not_implemented("list")
+    """List all imported plans."""
+    from facade_planner.infrastructure.persistence.facade_plan_repository import FileFacadePlanRepository
+
+    try:
+        ProjectService(Path.cwd()).require_initialized()
+        plans_dir = Path.cwd() / ".facadeplanner" / "plans"
+        repo = FileFacadePlanRepository(plans_dir)
+        plans = repo.list_all()
+
+        if not plans:
+            console.print("[yellow]Keine Pläne importiert.[/yellow]")
+            return
+
+        table = Table(title="Importierte Pläne")
+        table.add_column("ID", style="dim", width=10)
+        table.add_column("Name")
+        table.add_column("Generator", width=10)
+        table.add_column("Seiten", width=6)
+        table.add_column("Geometrien", width=12)
+        table.add_column("Importiert")
+
+        for plan in plans:
+            table.add_row(
+                plan.id[:8],
+                plan.name,
+                plan.pdf_source.value,
+                str(plan.page_count),
+                str(plan.total_geometry_count),
+                plan.imported_at.strftime("%Y-%m-%d %H:%M"),
+            )
+        console.print(table)
+    except FacadePlannerError as e:
+        console.print(f"[red]Fehler:[/red] {e}")
+        raise typer.Exit(1) from e
