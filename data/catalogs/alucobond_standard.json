@@ -1,0 +1,134 @@
+{
+  "id": "alucobond-standard",
+  "supplier_name": "ALUCOBOND",
+  "source_path": "data/catalogs/alucobond_standard.json",
+  "source_document": "ALUCOBOND Standard — Technische Daten (alucobond.com, 2026)",
+  "imported_at": "2026-06-08T00:00:00",
+  "notes": [
+    "ALUCOBOND Standard: Polyethylen-Kern (PE), Brandklasse B2 (normalentflammbar).",
+    "Nicht geeignet für Fassaden ab GK3 (>7m Traufhöhe) nach MBO § 26.",
+    "Deckbleche: 2 × 0.5mm Aluminium EN AW-5005A (ALMg1).",
+    "Standardbreiten: 1000, 1250, 1500mm (1575, 1750mm auf Anfrage).",
+    "Standardlängen: 2000–6800mm. Sonderformate bis 9144mm.",
+    "Gewichtsangaben: 4.5 kg/m² (3mm), 5.5 kg/m² (4mm), 7.3 kg/m² (6mm)."
+  ],
+  "formats": [
+    {
+      "format_code": "ACB-STD-1000x2000-3",
+      "width_mm": 1000,
+      "height_mm": 2000,
+      "thickness_mm": 3,
+      "weight_kg_m2": 4.5,
+      "description": "ALUCOBOND Standard — 3mm, 1000×2000mm",
+      "is_active": true,
+      "product_line": "ALUCOBOND Standard",
+      "fire_class": "B2"
+    },
+    {
+      "format_code": "ACB-STD-1250x2500-3",
+      "width_mm": 1250,
+      "height_mm": 2500,
+      "thickness_mm": 3,
+      "weight_kg_m2": 4.5,
+      "description": "ALUCOBOND Standard — 3mm, 1250×2500mm",
+      "is_active": true,
+      "product_line": "ALUCOBOND Standard",
+      "fire_class": "B2"
+    },
+    {
+      "format_code": "ACB-STD-1500x3000-3",
+      "width_mm": 1500,
+      "height_mm": 3000,
+      "thickness_mm": 3,
+      "weight_kg_m2": 4.5,
+      "description": "ALUCOBOND Standard — 3mm, 1500×3000mm",
+      "is_active": true,
+      "product_line": "ALUCOBOND Standard",
+      "fire_class": "B2"
+    },
+    {
+      "format_code": "ACB-STD-1000x2000-4",
+      "width_mm": 1000,
+      "height_mm": 2000,
+      "thickness_mm": 4,
+      "weight_kg_m2": 5.5,
+      "description": "ALUCOBOND Standard — 4mm, 1000×2000mm",
+      "is_active": true,
+      "product_line": "ALUCOBOND Standard",
+      "fire_class": "B2"
+    },
+    {
+      "format_code": "ACB-STD-1250x2500-4",
+      "width_mm": 1250,
+      "height_mm": 2500,
+      "thickness_mm": 4,
+      "weight_kg_m2": 5.5,
+      "description": "ALUCOBOND Standard — 4mm, 1250×2500mm (Standardformat)",
+      "is_active": true,
+      "product_line": "ALUCOBOND Standard",
+      "fire_class": "B2"
+    },
+    {
+      "format_code": "ACB-STD-1250x3200-4",
+      "width_mm": 1250,
+      "height_mm": 3200,
+      "thickness_mm": 4,
+      "weight_kg_m2": 5.5,
+      "description": "ALUCOBOND Standard — 4mm, 1250×3200mm",
+      "is_active": true,
+      "product_line": "ALUCOBOND Standard",
+      "fire_class": "B2"
+    },
+    {
+      "format_code": "ACB-STD-1500x3000-4",
+      "width_mm": 1500,
+      "height_mm": 3000,
+      "thickness_mm": 4,
+      "weight_kg_m2": 5.5,
+      "description": "ALUCOBOND Standard — 4mm, 1500×3000mm",
+      "is_active": true,
+      "product_line": "ALUCOBOND Standard",
+      "fire_class": "B2"
+    },
+    {
+      "format_code": "ACB-STD-1500x4000-4",
+      "width_mm": 1500,
+      "height_mm": 4000,
+      "thickness_mm": 4,
+      "weight_kg_m2": 5.5,
+      "description": "ALUCOBOND Standard — 4mm, 1500×4000mm",
+      "is_active": true,
+      "product_line": "ALUCOBOND Standard",
+      "fire_class": "B2"
+    },
+    {
+      "format_code": "ACB-STD-1000x3000-6",
+      "width_mm": 1000,
+      "height_mm": 3000,
+      "thickness_mm": 6,
+      "weight_kg_m2": 7.3,
+      "description": "ALUCOBOND Standard — 6mm, 1000×3000mm",
+      "is_active": true,
+      "product_line": "ALUCOBOND Standard",
+      "fire_class": "B2"
+    },
+    {
+      "format_code": "ACB-STD-1500x3000-6",
+      "width_mm": 1500,
+      "height_mm": 3000,
+      "thickness_mm": 6,
+      "weight_kg_m2": 7.3,
+      "description": "ALUCOBOND Standard — 6mm, 1500×3000mm",
+      "is_active": true,
+      "product_line": "ALUCOBOND Standard",
+      "fire_class": "B2"
+    }
+  ],
+  "rules_raw": [
+    {
+      "id": "ACB-STD-R-001",
+      "description": "Brandklasse B2 — NUR geeignet für EFH und Gebäude bis GK2 (max. 7m Traufhöhe). Nicht für Hochhäuser.",
+      "parameters": {}
+    }
+  ]
+}

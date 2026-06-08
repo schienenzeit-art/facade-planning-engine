@@ -1,0 +1,136 @@
+{
+  "id": "alucobond-plus",
+  "supplier_name": "ALUCOBOND",
+  "source_path": "data/catalogs/alucobond_plus.json",
+  "source_document": "ALUCOBOND PLUS — Technische Daten (alucobond.com, 2026)",
+  "imported_at": "2026-06-08T00:00:00",
+  "notes": [
+    "ALUCOBOND PLUS: schwerentflammbar, Brandklasse B1 (DIN 4102) / optional A2.",
+    "Kern: Mineralfüllung (70% nicht brennbare Mineralien) — flammhemmend.",
+    "Deckbleche: 2 × 0.5mm Aluminium EN AW-5005A (ALMg1).",
+    "Standardbreiten: 1000, 1250, 1500mm (1575, 1750mm auf Anfrage).",
+    "Standardlängen: 2000–6800mm. Sonderformate bis 9144mm auf Anfrage.",
+    "Über 91 Oberflächen/Farben verfügbar.",
+    "Gewichtsangaben: 5.9 kg/m² (3mm), 7.6 kg/m² (4mm)."
+  ],
+  "formats": [
+    {
+      "format_code": "ACB-PLUS-1000x2000-3",
+      "width_mm": 1000,
+      "height_mm": 2000,
+      "thickness_mm": 3,
+      "weight_kg_m2": 5.9,
+      "description": "ALUCOBOND PLUS — 3mm, 1000×2000mm",
+      "is_active": true,
+      "product_line": "ALUCOBOND PLUS",
+      "fire_class": "B1"
+    },
+    {
+      "format_code": "ACB-PLUS-1250x2500-3",
+      "width_mm": 1250,
+      "height_mm": 2500,
+      "thickness_mm": 3,
+      "weight_kg_m2": 5.9,
+      "description": "ALUCOBOND PLUS — 3mm, 1250×2500mm",
+      "is_active": true,
+      "product_line": "ALUCOBOND PLUS",
+      "fire_class": "B1"
+    },
+    {
+      "format_code": "ACB-PLUS-1250x3000-3",
+      "width_mm": 1250,
+      "height_mm": 3000,
+      "thickness_mm": 3,
+      "weight_kg_m2": 5.9,
+      "description": "ALUCOBOND PLUS — 3mm, 1250×3000mm",
+      "is_active": true,
+      "product_line": "ALUCOBOND PLUS",
+      "fire_class": "B1"
+    },
+    {
+      "format_code": "ACB-PLUS-1500x3000-3",
+      "width_mm": 1500,
+      "height_mm": 3000,
+      "thickness_mm": 3,
+      "weight_kg_m2": 5.9,
+      "description": "ALUCOBOND PLUS — 3mm, 1500×3000mm",
+      "is_active": true,
+      "product_line": "ALUCOBOND PLUS",
+      "fire_class": "B1"
+    },
+    {
+      "format_code": "ACB-PLUS-1000x2000-4",
+      "width_mm": 1000,
+      "height_mm": 2000,
+      "thickness_mm": 4,
+      "weight_kg_m2": 7.6,
+      "description": "ALUCOBOND PLUS — 4mm, 1000×2000mm",
+      "is_active": true,
+      "product_line": "ALUCOBOND PLUS",
+      "fire_class": "B1"
+    },
+    {
+      "format_code": "ACB-PLUS-1250x2500-4",
+      "width_mm": 1250,
+      "height_mm": 2500,
+      "thickness_mm": 4,
+      "weight_kg_m2": 7.6,
+      "description": "ALUCOBOND PLUS — 4mm, 1250×2500mm (Standardformat)",
+      "is_active": true,
+      "product_line": "ALUCOBOND PLUS",
+      "fire_class": "B1"
+    },
+    {
+      "format_code": "ACB-PLUS-1250x3000-4",
+      "width_mm": 1250,
+      "height_mm": 3000,
+      "thickness_mm": 4,
+      "weight_kg_m2": 7.6,
+      "description": "ALUCOBOND PLUS — 4mm, 1250×3000mm",
+      "is_active": true,
+      "product_line": "ALUCOBOND PLUS",
+      "fire_class": "B1"
+    },
+    {
+      "format_code": "ACB-PLUS-1500x3000-4",
+      "width_mm": 1500,
+      "height_mm": 3000,
+      "thickness_mm": 4,
+      "weight_kg_m2": 7.6,
+      "description": "ALUCOBOND PLUS — 4mm, 1500×3000mm",
+      "is_active": true,
+      "product_line": "ALUCOBOND PLUS",
+      "fire_class": "B1"
+    },
+    {
+      "format_code": "ACB-PLUS-1500x4000-4",
+      "width_mm": 1500,
+      "height_mm": 4000,
+      "thickness_mm": 4,
+      "weight_kg_m2": 7.6,
+      "description": "ALUCOBOND PLUS — 4mm, 1500×4000mm",
+      "is_active": true,
+      "product_line": "ALUCOBOND PLUS",
+      "fire_class": "B1"
+    },
+    {
+      "format_code": "ACB-PLUS-1000x3000-6",
+      "width_mm": 1000,
+      "height_mm": 3000,
+      "thickness_mm": 6,
+      "weight_kg_m2": 7.3,
+      "description": "ALUCOBOND PLUS — 6mm, 1000×3000mm (auf Anfrage)",
+      "is_active": true,
+      "product_line": "ALUCOBOND PLUS",
+      "fire_class": "B1",
+      "note": "Auf Anfrage verfügbar"
+    }
+  ],
+  "rules_raw": [
+    {
+      "id": "ACB-PLUS-R-001",
+      "description": "Brandklasse B1 (schwerentflammbar) — geeignet für mehrgeschossige Gebäude",
+      "parameters": {}
+    }
+  ]
+}

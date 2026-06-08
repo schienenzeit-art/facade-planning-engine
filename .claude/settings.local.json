@@ -1,0 +1,32 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(python --version)",
+      "PowerShell(python -m pip --version)",
+      "PowerShell(winget install --id Python.Python.3.11 --silent --accept-package-agreements --accept-source-agreements)",
+      "PowerShell($env:PATH = [System.Environment]::GetEnvironmentVariable\\(\"PATH\", \"Machine\"\\) + \";\" + [System.Environment]::GetEnvironmentVariable\\(\"PATH\", \"User\"\\); python --version)",
+      "Bash(python -m pytest tests/unit/test_rules.py -v)",
+      "PowerShell(New-Item -ItemType Directory -Path \"C:\\\\Users\\\\dario\\\\Desktop\\\\facadeplanner\\\\src\\\\facade_planner\\\\infrastructure\\\\adapters\\\\pdf_normalizers\" -Force)",
+      "PowerShell(New-Item -ItemType Directory -Path \"C:\\\\Users\\\\dario\\\\Desktop\\\\facadeplanner\\\\tests\\\\fixtures\\\\pdf\" -Force)",
+      "PowerShell(py -3.11 -c \"from pdfminer import layout; print\\([x for x in dir\\(layout\\) if x.startswith\\('LT'\\)]\\)\")",
+      "WebFetch(domain:www.swisspearl.com)",
+      "WebFetch(domain:www.alucobond.com)",
+      "WebSearch",
+      "WebFetch(domain:alucobond.com.sg)",
+      "WebFetch(domain:www.alucobondusa.com)",
+      "WebFetch(domain:hvgfacades.com.au)",
+      "WebFetch(domain:d371dyuip757b1.cloudfront.net)",
+      "WebFetch(domain:media.alucobond.com)",
+      "WebFetch(domain:www.joergkueper.de)",
+      "WebFetch(domain:www.ketterer-liebherr.de)",
+      "WebFetch(domain:docplayer.org)",
+      "WebFetch(domain:alucobond.com)",
+      "WebFetch(domain:www.flowersbydesign.com.au)",
+      "WebFetch(domain:www.accio.com)",
+      "WebFetch(domain:silo.tips)",
+      "WebFetch(domain:www.cmgmetals.com)",
+      "WebFetch(domain:www.synteconline.com.au)",
+      "PowerShell(New-Item -ItemType Directory -Path \"C:\\\\Users\\\\dario\\\\Desktop\\\\facadeplanner\\\\data\\\\catalogs\" -Force)"
+    ]
+  }
+}
