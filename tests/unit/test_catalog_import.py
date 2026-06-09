@@ -148,7 +148,7 @@ class TestCatalogImportService:
 
     def test_import_from_file_invalid_format_raises(self, catalog_with_invalid_format: Path) -> None:
         svc = CatalogImportService()
-        with pytest.raises(DomainRuleError, match="ungültige Format"):
+        with pytest.raises(DomainRuleError, match="ungueltiges Format"):
             svc.import_from_file(catalog_with_invalid_format)
 
     def test_import_sets_imported_at_to_now(self, minimal_catalog_json: Path) -> None:
