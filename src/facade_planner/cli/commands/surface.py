@@ -221,3 +221,135 @@ def reject_surface(
     except FacadePlannerError as e:
         console.print(f"[red]Fehler:[/red] {e}")
         raise typer.Exit(1) from e
+
+
+@app.command("detect-openings")
+def detect_openings(
+    surface_id: str = typer.Argument(..., help="Surface-ID (aus 'facade surface list')"),
+    tolerance: float = typer.Option(
+        1.0, "--tolerance", "-t", help="Toleranz in mm fuer Polygon-Einschluss (Standard: 1mm)."
+    ),
+    max_area: Optional[float] = typer.Option(
+        None,
+        "--max-area",
+        help="Maximale Kandidaten-Flaeche in mm² (kein Limit per Default).",
+    ),
+    replace: bool = typer.Option(
+        False,
+        "--replace",
+        help="Bestehende Oeffnungen loeschen und neu erkennen.",
+    ),
+) -> None:
+    """Detect openings (windows/doors) in a surface from its plan geometries.
+
+    \b
+    Reads raw geometries from the plan page that contains the surface.
+    Closed polygons smaller than the surface and passing containment checks
+    are added as openings (type: WINDOW / DOOR / OTHER).
+
+    Use --replace to clear existing openings and re-run detection.
+    """
+    try:
+        ProjectService(Path.cwd()).require_initialized()
+
+        from facade_planner.application.use_cases.detect_openings import (
+            DetectOpeningsUseCase,
+            openings_from_plan_page,
+        )
+
+        data_dir = Path.cwd() / ".facadeplanner"
+        repo = _surface_repo()
+        surface = repo.load(surface_id)
+
+        # Auto-extract candidates from the plan page
+        candidates = openings_from_plan_page(surface, data_dir, max_opening_area_mm2=max_area)
+
+        if not candidates:
+            console.print(
+                f"[yellow]Keine Kandidaten gefunden[/yellow] auf Plan-Seite "
+                f"{surface.plan_id[:8]}/Seite {surface.page_number}."
+            )
+            console.print(
+                "Tipp: Seite muss kalibriert sein und geschlossene Polygone enthalten."
+            )
+            return
+
+        uc = DetectOpeningsUseCase(data_dir)
+        result = uc.execute(
+            surface_id=surface_id,
+            candidate_boundaries=candidates,
+            tolerance_mm=tolerance,
+            replace_existing=replace,
+        )
+
+        if result.warnings:
+            for w in result.warnings:
+                console.print(f"[yellow]Warnung:[/yellow] {w}")
+
+        if not result.openings:
+            console.print(
+                f"[yellow]Keine Oeffnungen erkannt[/yellow] in {surface_id[:8]} "
+                f"({len(candidates)} Kandidaten geprueft)."
+            )
+            return
+
+        table = Table(title=f"Erkannte Oeffnungen — {surface_id[:8]}")
+        table.add_column("ID", style="dim", width=12)
+        table.add_column("Typ")
+        table.add_column("Flaeche m²", justify="right")
+        table.add_column("Eckpunkte", justify="right")
+
+        for opening in result.openings:
+            table.add_row(
+                opening.id,
+                opening.opening_type.value,
+                f"{opening.area_mm2 / 1_000_000:.4f}",
+                str(len(opening.boundary)),
+            )
+        console.print(table)
+        console.print(
+            f"\n[green]{len(result.openings)} Oeffnung(en) gespeichert.[/green]"
+        )
+
+    except FacadePlannerError as e:
+        console.print(f"[red]Fehler:[/red] {e}")
+        raise typer.Exit(1) from e
+
+
+@app.command("show")
+def show_surface(
+    surface_id: str = typer.Argument(..., help="Surface-ID"),
+) -> None:
+    """Show details of a surface including openings."""
+    try:
+        ProjectService(Path.cwd()).require_initialized()
+        repo = _surface_repo()
+        surface = repo.load(surface_id)
+
+        info = Table(title=f"Surface: {surface_id[:8]}")
+        info.add_column("Eigenschaft", style="cyan")
+        info.add_column("Wert")
+        info.add_row("ID", surface.id)
+        info.add_row("Plan", surface.plan_id[:8])
+        info.add_row("Seite", str(surface.page_number))
+        info.add_row("Status", surface.status.value)
+        info.add_row("Zone", surface.zone_id or "—")
+        info.add_row("Brutto m²", f"{surface.gross_area_mm2 / 1_000_000:.4f}")
+        info.add_row("Netto m²", f"{surface.net_area_mm2 / 1_000_000:.4f}")
+        info.add_row("Breite mm", f"{surface.width_mm:.0f}")
+        info.add_row("Hoehe mm", f"{surface.height_mm:.0f}")
+        info.add_row("Oeffnungen", str(len(surface.openings)))
+        console.print(info)
+
+        if surface.openings:
+            ot = Table(title="Oeffnungen")
+            ot.add_column("ID", style="dim")
+            ot.add_column("Typ")
+            ot.add_column("Flaeche m²", justify="right")
+            for o in surface.openings:
+                ot.add_row(o.id, o.opening_type.value, f"{o.area_mm2 / 1_000_000:.4f}")
+            console.print(ot)
+
+    except FacadePlannerError as e:
+        console.print(f"[red]Fehler:[/red] {e}")
+        raise typer.Exit(1) from e

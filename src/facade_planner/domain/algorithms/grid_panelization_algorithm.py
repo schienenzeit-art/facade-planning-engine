@@ -118,6 +118,19 @@ class GridPanelizationAlgorithm(BasePanelizationAlgorithm):
                     )
                 )
 
+        # Apply opening strategy (TRIM / DROP) when surface has openings
+        if surface.openings:
+            from facade_planner.domain.services.panel_opening_filter import (
+                PanelOpeningFilter,
+            )
+            panels = PanelOpeningFilter().apply(
+                panels,
+                surface.openings,
+                config.opening_strategy,
+                config.min_panel_width_mm,
+                config.min_panel_height_mm,
+            )
+
         return panels
 
 
