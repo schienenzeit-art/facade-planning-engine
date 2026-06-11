@@ -44,3 +44,17 @@ class PanelizationError(FacadePlannerError):
         self.error_type = error_type
         self.surface_id = surface_id
         super().__init__(f"[{error_type}] Surface {surface_id}: {message}")
+
+
+class ExportError(FacadePlannerError):
+    """Export operation failed (DXF write, ODA conversion, etc.)."""
+
+
+class OdaConverterNotFoundError(ExportError):
+    """ODA File Converter binary not found at configured path."""
+
+    def __init__(self, path: str) -> None:
+        super().__init__(
+            f"ODA File Converter nicht gefunden: {path}\n"
+            "Download: https://www.opendesign.com/guestfiles/oda_file_converter"
+        )
