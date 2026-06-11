@@ -1,4 +1,4 @@
-name: CodeQL Security Analysis
+name: CodeQL Security and Architecture Analysis
 
 on:
   push:
@@ -10,7 +10,7 @@ on:
 
 jobs:
   analyze:
-    name: Analyze Python
+    name: Analyze Python (Security + Architecture)
     runs-on: ubuntu-latest
     permissions:
       actions: read
@@ -24,7 +24,7 @@ jobs:
         uses: github/codeql-action/init@v3
         with:
           languages: python
-          queries: security-and-quality
+          config-file: ./.github/codeql/codeql-config.yml
 
       - name: Autobuild
         uses: github/codeql-action/autobuild@v3

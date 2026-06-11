@@ -1,0 +1,12 @@
+name: "Security and Architecture Analysis"
+
+queries:
+  - uses: security-and-quality
+  - uses: security-extended
+
+paths:
+  - src
+
+paths-ignore:
+  - "**/__pycache__"
+  - "**/*.pyc"
